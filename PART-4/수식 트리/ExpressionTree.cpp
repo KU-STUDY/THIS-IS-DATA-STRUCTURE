@@ -1,4 +1,5 @@
 #include <iostream>
+#include <stack>
 
 using namespace std;
 
@@ -8,95 +9,82 @@ struct Node {
 };
 
 class ExpressionTree {
-    private: 
+    private:
         Node* root;
-
+    
     public:
-        ExpressionTree() {
-            root = new Node();
+        ExpressionTree() {root=nullptr;}
+        ~ExpressionTree() {}
+        
+        void MakeExpTree(string exp);
+
+        int calculate() {
+            return _calculate(root);
         }
-        void addTree(char* expression, Node** rootNode);
-        void printByPostOrder(Node* rootNode);
-        double evaluate(Node* rootNode);
-        Node* getRoot();
-        Node** getRoot2() {
-            return &root;
+        int _calculate(Node * node);
+        void print() {
+            postOrder(root);
+        }
+        void postOrder(Node * node) {
+            if(node != nullptr) {
+                postOrder(node->left);
+                postOrder(node->right);
+                cout << node->value << '\n';
+            }
         }
 };
 
-Node* ExpressionTree::getRoot() {
-    return root;
+int ExpressionTree::_calculate(Node *node){
+    int op1, op2;
+
+    if(node->left == nullptr && node->right == nullptr) return (node->value) - '0';
+
+    op1 = _calculate(node->left);
+    op2 = _calculate(node->right);
+
+    switch (node->value)
+    {
+    case '+':
+        return op1 + op2;
+    case '*':
+        return op1 * op2;
+    case '/':
+        return op1 / op2;
+    case '-':
+        return op1 - op2;
+    default:
+        break;
+    }
+    return 0;
 }
 
-void ExpressionTree::addTree(char* expression, Node** rootNode) {
-    Node *node = new Node();
 
-    int len = strlen(expression);
-    char token = expression[len-1];
-    expression[len-1] = '\0';
-    node->value = token;
+void ExpressionTree::MakeExpTree(string exp) {
+    stack <Node*> s;
+    for(auto c : exp) {
+        if(isdigit(c)) {
+            Node* node = new Node();
+            node->value = c;
+            s.push(node);
+        }
+        else {
+            Node* node = new Node();
+            node->value = c;
+            Node* rightNode = s.top(); s.pop();
+            Node* leftNode = s.top(); s.pop();
+            node->right = rightNode;
+            node->left = leftNode;
 
-    switch(token) {
-        // 연산자 인 경우
-        case '+': case '-': case '*': case '/':
-            addTree(expression, &(*rootNode)->right);
-            addTree(expression, &(*rootNode)->left);
-        default:
-            *rootNode = node;
-            break;
-    }
-    
-}
-
-void ExpressionTree::printByPostOrder(Node* rootNode) {
-    if (rootNode != nullptr) {
-        printByPostOrder(rootNode->left);
-        printByPostOrder(rootNode->right);
-        cout << rootNode->value << "\n";
-    }
-}
-
-double ExpressionTree::evaluate(Node* rootNode) {
-    
-    double left = 0;
-    double right = 0;
-    double result = 0;
-
-    switch(rootNode->value) {
-        case '+': case '-': case '*': case '/':
-            left = evaluate(root->left);
-            right = evaluate(root->right);
-
-            if (rootNode->value == '+') result = left + right;
-            else if(rootNode->value == '-') result = left - right;
-            else if(rootNode->value == '*') result = left * right;
-            else if(rootNode->value == '/') result = left / right;
-
-            break;
-
-        default:
-            string temp;
-            temp.push_back(rootNode->value);
-            result = stod(temp);
-            break;
+            s.push(node);
+        }
     }
 
-    return result;
+    if(!s.empty()) root = s.top();
 }
 
 int main(void) {
-
-    char PostfixExpression[100];
-    cout << "수식을 입력하세요 : ";
-    cin >> PostfixExpression;
-
-    ExpressionTree tree = ExpressionTree();
-    tree.addTree(PostfixExpression, tree.getRoot2());
-
-    cout << "PostOrder ... \n";
-    tree.printByPostOrder(tree.getRoot());
-
-    double result = tree.evaluate(tree.getRoot());
-    cout << result;
-    
+    ExpressionTree *Exp = new ExpressionTree();
+    Exp -> MakeExpTree("12+7*");
+    Exp -> print();
+    cout << '\n' << Exp->calculate() << '\n';
 }

@@ -23,10 +23,10 @@
 - 이진 탐색, 이진 탐색 트리, 레드 블랙 트리
 ### [[7장 우선순위 큐와 힙]](https://github.com/kmw10693/THIS-IS-DATA-STRUCTURE_AND_ALGORITHM-WITH-C/tree/main/PART-7)
 - 우선 순위 큐, 힙
-### [8장 그래프]
+### [[8장 해시 테이블]](https://github.com/kmw10693/THIS-IS-DATA-STRUCTURE_AND_ALGORITHM-WITH-C/tree/main/PART-8)
+- 해시 함수, 체이닝, 개방 주소법
+### [9장 그래프]
 - 인접 행렬/인접 리스트
 - DFS, BFS, 프림 알고리즘, 크루스칼 알고리즘
-### [9장 해시 테이블]
-- 해시 함수, 체이닝, 개방 주소법
 ### [10장 분할 정복]
 - 병합 정렬, 거듭 제곱 계산 알고리즘

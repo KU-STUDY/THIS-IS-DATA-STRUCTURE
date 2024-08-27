@@ -39,7 +39,6 @@ class Hashtable {
             }
         }
 
-
         int hashCode(string value) {
             int h = 0;
             int length = value.length();

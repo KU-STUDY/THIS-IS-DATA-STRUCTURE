@@ -25,7 +25,7 @@
 - 우선 순위 큐, 힙
 ### [[8장 해시 테이블]](https://github.com/kmw10693/THIS-IS-DATA-STRUCTURE_AND_ALGORITHM-WITH-C/tree/main/PART-8)
 - 해시 함수, 체이닝, 개방 주소법
-### [9장 그래프]
+### [[9장 그래프]](https://github.com/kmw10693/THIS-IS-DATA-STRUCTURE_AND_ALGORITHM-WITH-C/tree/main/PART-9)
 - 인접 행렬/인접 리스트
 - DFS, BFS, 프림 알고리즘, 크루스칼 알고리즘
 ### [10장 분할 정복]
